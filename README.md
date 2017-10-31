@@ -1,8 +1,8 @@
 # MVPOpenHackTW
 ## TeamMembers
-["Kenji"]("")
+[Kenji.Tsai]("")
 
-["SongSong.Tsai"]("")
+[SongSong.Tsai]("")
 ## 主題
 Bot+資料收集+(Power BI)
 ## 抓得到的東西
