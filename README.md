@@ -21,3 +21,18 @@ Bot+資料收集+(Power BI)
 
 --- 20171030
 
+---20171109
+# web-layout
+
+# Installation
+
+`npm install`
+
+# Run
+
+`npm run build`
+
+`npm run start`
+
+open with 'localhost:8888'
+
