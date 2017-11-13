@@ -21,18 +21,22 @@ Bot+資料收集+(Power BI)
 
 --- 20171030
 
----20171109
-# web-layout
+---20171113
+安裝 
+ - .net core
+ - npm
+ - react
+  - npm install --save react react-dom
 
-# Installation
+啟動方式
+ - 第一次啟用
+  - dotnet restore
+  - npm install (or yarn)
+ - 輸入 yarn start (or s若你有安裝 yarn)
+ - 或者是 npm run start
+ - [demo] (http://localhost:5000)
 
-`npm install`
+API 測試
+ - [swagger](http://localhost:5000/swagger/)
 
-# Run
-
-`npm run build`
-
-`npm run start`
-
-open with 'localhost:8888'
 
