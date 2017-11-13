@@ -21,18 +21,17 @@ Bot+資料收集+(Power BI)
 
 --- 20171030
 
----20171109
-# web-layout
+---20171113
+安裝 
+ - npm
+ - react
 
-# Installation
+啟動方式
+ - 輸入 yarn start (若你有安裝 yarn)
+ - 或者是 npm run start
+ - http://localhost:5000 查看前端
 
-`npm install`
+API 測試
+ - http://localhost:5000/swagger/
 
-# Run
-
-`npm run build`
-
-`npm run start`
-
-open with 'localhost:8888'
 

@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"] - VIVOTEK</title>
+</head>
+<body>
+    @RenderBody()
+    @RenderSection("Scripts", required: false)
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <environment names="Development">
+      <script src="http://localhost:8081/bundle.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+      <!-- <script src="~/dist/js/bundle.js"></script> -->
+      <script src="http://localhost:8081/bundle.js"></script>
+    </environment>
+</body>
