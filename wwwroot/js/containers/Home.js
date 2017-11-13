@@ -25,9 +25,7 @@ import {
     SelectField,
     TextField,
 } from 'material-ui';
-import {AccessAlarm, Icons, ThreeDRotation} from 'material-ui-icons';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import AutoComplete from 'material-ui/AutoComplete';
+import ReactPlayer from 'react-player';
 import Menu from '../components/Menu';
 
 const styles = {
@@ -37,26 +35,10 @@ const styles = {
         margin: 'auto',
         backgroundColor: blue500
     }, 
-    existDownLoadButtonObject:{
-        marginTop: '20px',
-        marginBottom: "20px",
-        width: "300px",
-        height: "60px",
-    },
-    existDownLoadButtonLabel:{
-        fontSize: "25px",
-        margin: "auto",
-        textAlign: "center"
-    },
-    existModelField:{
+    table:{
+        textAlign: 'center',
         width: '80%',
         margin: 'auto',
-    },
-    existModelbottom:{
-        backgroundColor: blueGrey400
-    },
-    releasedNote:{
-        width: "200px",
     }
 };
 
@@ -149,6 +131,18 @@ class Main extends Component {
                     <MenuItem>Home</MenuItem>
                     <MenuItem>New Model Spec</MenuItem>
                 </Drawer>
+                <Grid
+                    style={styles.table}
+                >
+                    <Row className="show-grid">
+                        <Col >
+                            <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
+                        </Col>
+                        <Col >
+                            hali
+                        </Col>
+                   </Row> 
+                </Grid>
             </div>
         );
     }

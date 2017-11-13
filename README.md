@@ -31,7 +31,8 @@ Bot+資料收集+(Power BI)
 啟動方式
  - 第一次啟用
   - dotnet restore
- - 輸入 yarn start (若你有安裝 yarn)
+  - npm install (or yarn)
+ - 輸入 yarn start (or s若你有安裝 yarn)
  - 或者是 npm run start
  - [demo] (http://localhost:5000)
 
