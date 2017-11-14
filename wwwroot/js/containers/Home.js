@@ -30,16 +30,33 @@ import Menu from '../components/Menu';
 
 const styles = {
     container: {
-        textAlign: 'center',
-        width: '80%',
+        width: '100%',
         margin: 'auto',
         backgroundColor: blue500
     }, 
     table:{
-        textAlign: 'center',
-        width: '80%',
-        margin: 'auto',
+        width: '100%',
+        
+    },
+    columns:{
+        display:'inline-block',
+        width:'50%',
+        height:'50vh'
+    },
+    rows:{
+        width:'100%',
+        padding: '15px'
+    },
+    players:{
+        display:'inline-block',
+    },
+    textboxs:{
+        marginTop:'0px',
+        maxWidth:'100%',
+        width:'100%',
+        height:'100%'
     }
+
 };
 
 const muiTheme = getMuiTheme({
@@ -131,15 +148,14 @@ class Main extends Component {
                     <MenuItem>Home</MenuItem>
                     <MenuItem>New Model Spec</MenuItem>
                 </Drawer>
-                <Grid
-                    style={styles.table}
-                >
-                    <Row className="show-grid">
-                        <Col >
-                            <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
+                <Grid style={styles.table}>
+                   <Row >
+                        <Col style={styles.columns}>
+                            <ReactPlayer width="100%" height="100%" style={styles.players} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
                         </Col>
-                        <Col >
-                            hali
+                        <Col style={styles.columns}>
+                        <textarea style={styles.textboxs}>
+                        </textarea>
                         </Col>
                    </Row> 
                 </Grid>
