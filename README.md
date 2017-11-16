@@ -34,9 +34,9 @@ Bot+資料收集+(Power BI)
   - npm install (or yarn)
  - 輸入 yarn start (or s若你有安裝 yarn)
  - 或者是 npm run start
- - [demo] (http://localhost:5000)
+ - [demo] (http://localhost:8888)
 
 API 測試
- - [swagger](http://localhost:5000/swagger/)
+ - [swagger](http://localhost:8888/swagger/)
 
 

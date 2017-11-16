@@ -25,7 +25,7 @@ import {
     SelectField,
     TextField,
 } from 'material-ui';
-import ReactPlayer from 'react-player';
+// import ReactPlayer from 'react-player';
 import Menu from '../components/Menu';
 
 const styles = {
@@ -36,15 +36,16 @@ const styles = {
     }, 
     table:{
         width: '100%',
-        
+        margin: 'auto',
     },
     columns:{
         display:'inline-block',
-        width:'50%',
+        margin: 'auto',
+        width:'40%',
         height:'50vh'
     },
     rows:{
-        width:'100%',
+        width:'80%',
         padding: '15px'
     },
     players:{
@@ -78,7 +79,7 @@ class Main extends Component {
             searchable: true,
             color: "red", 
             maxdropdownheight: 300,
-            openDialog: false,
+            pictures:[],
         };
         this.toogleDrawer = this
             .toogleDrawer
@@ -88,9 +89,67 @@ class Main extends Component {
             .bind(this);
         
     }
+    componentDidMount() {
+        this.interval = setInterval(this.getImage(), 1000000);
+    }
 
     componentWillMount() {
 
+    }
+
+    getImage() {
+        // let pictures =
+        //     fetch("http://172.19.1.24/cgi-bin/viewer/video.jpg?quality=5&streamid=0")
+        //     .then((res) => {
+        //         return res.json();
+        //     })
+        //     .then( data =>{
+        //         let pictures = data.res.map((pic) =>{
+        //             return(
+        //                 <div key={pic.res}>
+        //                     <img src={this.pic} />
+        //                 </div>
+        //             )
+        //         })
+        //     })
+        // let test = fetch("http://172.19.1.24/cgi-bin/viewer/video.jpg?quality=5&streamid=0");
+        let myh = new Headers(
+            {
+                "Content-Type": "image/jpeg",
+            }
+        );
+        let getCameraPara = {
+            method: "Get",
+            mode: 'no-cors',
+            headers: myh,
+            // type: "image/jpeg"
+        }
+        // mode: 'no-cors',才不會有跨網域的問題
+        let test = 
+            fetch("http://172.19.1.70/cgi-bin/viewer/video.jpg?quality=5&streamid=0", getCameraPara)
+            .then((response) => {
+                if(response.ok)
+                {
+                    console.log("test:", response.blob());
+                    return response;
+                }
+                // else{
+                    throw new Error('qerqwhfqj[');
+                // }
+                // console.log("test:", response.blob());
+                // return response;
+                // console.log("test:", response.date);
+                // return response;
+                let base64Str = response.data;
+                var imageBase64 = 'data:' + ';base64,' + base64Str;
+                // Return base64 image
+                // RESOLVE(imageBase64)
+                console.log("imageBase64:", imageBase64);
+                return (imageBase64)
+            });
+        this.setState({pictures: test.blob});
+        // console.log("state:", this.state.pictures);
+        console.log("test2:", test);
     }
 
     toogleDrawer() {
@@ -100,34 +159,6 @@ class Main extends Component {
     }
     handleChange(event, logged) {
         this.setState({logged: logged});
-    }
-    
-    clickHandler(e){
-        alert('the button was clicked');
-    }
-    handlerVersionChange(e){
-        this.setState({convertNewVersion:e.currentTarget.value});
-    }
-    onMouseOverHandler(e){
-        this.setState({color:"blue"});
-    }
-    onMouseOutHandler(e){
-        this.setState({color:"red"});
-    }
-    handleSubmit(e){
-        e.preventDefault();
-        alert("表單送出");
-        alert(
-            "New Version:" + this.state.convertNewVersion 
-        +   "Select Model:" +this.state.queryTargetModel
-        );
-        console.log("New Version:" + this.state.convertNewVersion);
-    }
-    test(e){
-        // e.preventDefault();
-        this.setState({
-            autoCompletSearchText: e
-        });
     }
     
     render() {
@@ -149,15 +180,28 @@ class Main extends Component {
                     <MenuItem>New Model Spec</MenuItem>
                 </Drawer>
                 <Grid style={styles.table}>
-                   <Row >
+                    {/*<Row>
                         <Col style={styles.columns}>
                             <ReactPlayer width="100%" height="100%" style={styles.players} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
                         </Col>
                         <Col style={styles.columns}>
-                        <textarea style={styles.textboxs}>
-                        </textarea>
+                            <textarea style={styles.textboxs}>
+                            </textarea>
                         </Col>
-                   </Row> 
+                    </Row> */}
+                    <Row>
+                        {/*<Col style={styles.columns}>
+                            http://ip位址/cgi-bin/viewer/video.jpg?quality=5&streamid=0 -> 拿到這時刻的截圖
+                           <img width="100%" height="100%" src="http://172.19.1.24/cgi-bin/viewer/video.jpg?quality=5&streamid=0"></img> 
+                        </Col>*/}
+                        <Col style={styles.columns}>
+                           <p>{this.state.pictures}</p>
+                        </Col>
+                        <Col style={styles.columns}>
+                            <textarea style={styles.textboxs}>
+                            </textarea>
+                        </Col>
+                    </Row>
                 </Grid>
             </div>
         );
