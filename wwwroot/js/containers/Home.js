@@ -26,6 +26,7 @@ import {
     TextField,
 } from 'material-ui';
 import Menu from '../components/Menu';
+// import base64Img from 'base64-img';
 
 const styles = {
     container: {
@@ -97,7 +98,9 @@ class Main extends Component {
             maxdropdownheight: 300,
             pictures:[],
             // imageUrl:["http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg"]
-            imageUrl:["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511029930205&di=380754d4806aa47018aa80d8dea477bd&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fa5c27d1ed21b0ef4cee1584dd7c451da81cb3e9c.jpg"],
+            // imageUrl:["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511029930205&di=380754d4806aa47018aa80d8dea477bd&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fa5c27d1ed21b0ef4cee1584dd7c451da81cb3e9c.jpg"],
+            imageUrl:["http://169.254.73.228/cgi-bin/viewer/video.jpg?quality=5&streamid=0"],
+            sourceImage:[],
             responseJson:[]
         };
         this.toogleDrawer = this
@@ -111,15 +114,20 @@ class Main extends Component {
     componentDidMount() {
         // this.interval = setInterval(this.getImage(), 1000000);
         // this.interval = setInterval(this.processImage(), 100000);
-        // this.interval = setInterval(this.setState({imageUrl: []}), 100);
+        this.interval = setInterval(this.updateImage(), 1000);
     }
 
     componentWillMount() {
 
     }
 
+    updateImage(){
+        // this.setState({sourceImage:this.state.imageUrl});
+        document.querySelector("#sourceImage").src = this.state.imageUrl;
+    }
+
     processImage() {
-        let subscriptionKey = "";
+        let subscriptionKey = "102740de8d4647d39c488e424657b9c2";
         let uriBase = "https://eastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
         // Request parameters.
@@ -130,9 +138,11 @@ class Main extends Component {
         };
 
         // Display the image.
-        let sourceImageUrl = this.state.imageUrl;
-        document.querySelector("#sourceImage").src = sourceImageUrl;
-
+        let test = this.state.imageUrl;
+        document.querySelector("#sourceImage").src = test;
+        // this.setState({sourceImageUrl: test});
+        // let imageString = this.getBase64Image(test);
+        // let imageString = base64Img.base64(test, function(err, data) {return data;});
         // Perform the REST API call.
         $.ajax({
             url: uriBase + "?" + $.param(params),
@@ -144,7 +154,7 @@ class Main extends Component {
             },
             type: "POST",
             // Request body.
-            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+            data: '{"url": ' + '"' + test + '"}',
         })
 
         .done( (data) => {
@@ -205,6 +215,7 @@ class Main extends Component {
                         <Col style={styles.columns}>
                             Source image:
                             <img style={styles.wrapper} id="sourceImage" />
+                                {this.state.sourceImage}
                         </Col>
                         <Col style={styles.columns}>
                             Response:
@@ -215,6 +226,9 @@ class Main extends Component {
                             >
                             </textarea>
                         </Col>
+                    </Row>
+                    <Row>
+                        
                     </Row>
                 </Grid>
             </div>
