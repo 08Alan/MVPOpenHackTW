@@ -25,7 +25,6 @@ import {
     SelectField,
     TextField,
 } from 'material-ui';
-// import ReactPlayer from 'react-player';
 import Menu from '../components/Menu';
 
 const styles = {
@@ -56,7 +55,24 @@ const styles = {
         maxWidth:'100%',
         width:'100%',
         height:'100%'
-    }
+    },
+    wrapper:{
+        width:'100%',
+        height:'100%',
+        display: 'talbe'
+    },
+    wrapperJsonOutput:{
+        overflow: 'scroll',
+        resize: 'none',
+        width:'100%',
+        height:'100%',
+        display:'talbe'
+    },
+    sampleInput:{
+        type:"text",
+        width:'300px',
+    },
+
 
 };
 
@@ -80,6 +96,9 @@ class Main extends Component {
             color: "red", 
             maxdropdownheight: 300,
             pictures:[],
+            // imageUrl:["http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg"]
+            imageUrl:["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511029930205&di=380754d4806aa47018aa80d8dea477bd&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fa5c27d1ed21b0ef4cee1584dd7c451da81cb3e9c.jpg"],
+            responseJson:[]
         };
         this.toogleDrawer = this
             .toogleDrawer
@@ -90,67 +109,56 @@ class Main extends Component {
         
     }
     componentDidMount() {
-        this.interval = setInterval(this.getImage(), 1000000);
+        // this.interval = setInterval(this.getImage(), 1000000);
+        // this.interval = setInterval(this.processImage(), 100000);
+        // this.interval = setInterval(this.setState({imageUrl: []}), 100);
     }
 
     componentWillMount() {
 
     }
 
-    getImage() {
-        // let pictures =
-        //     fetch("http://172.19.1.24/cgi-bin/viewer/video.jpg?quality=5&streamid=0")
-        //     .then((res) => {
-        //         return res.json();
-        //     })
-        //     .then( data =>{
-        //         let pictures = data.res.map((pic) =>{
-        //             return(
-        //                 <div key={pic.res}>
-        //                     <img src={this.pic} />
-        //                 </div>
-        //             )
-        //         })
-        //     })
-        // let test = fetch("http://172.19.1.24/cgi-bin/viewer/video.jpg?quality=5&streamid=0");
-        let myh = new Headers(
-            {
-                "Content-Type": "image/jpeg",
-            }
-        );
-        let getCameraPara = {
-            method: "Get",
-            mode: 'no-cors',
-            headers: myh,
-            // type: "image/jpeg"
-        }
-        // mode: 'no-cors',才不會有跨網域的問題
-        let test = 
-            fetch("http://172.19.1.70/cgi-bin/viewer/video.jpg?quality=5&streamid=0", getCameraPara)
-            .then((response) => {
-                if(response.ok)
-                {
-                    console.log("test:", response.blob());
-                    return response;
-                }
-                // else{
-                    throw new Error('qerqwhfqj[');
-                // }
-                // console.log("test:", response.blob());
-                // return response;
-                // console.log("test:", response.date);
-                // return response;
-                let base64Str = response.data;
-                var imageBase64 = 'data:' + ';base64,' + base64Str;
-                // Return base64 image
-                // RESOLVE(imageBase64)
-                console.log("imageBase64:", imageBase64);
-                return (imageBase64)
-            });
-        this.setState({pictures: test.blob});
-        // console.log("state:", this.state.pictures);
-        console.log("test2:", test);
-    }
+    processImage() {
+        let subscriptionKey = "";
+        let uriBase = "https://eastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
+
+        // Request parameters.
+        let params = {
+            "visualFeatures": "Categories,Description,Color",
+            "details": "",
+            "language": "en",
+        };
+
+        // Display the image.
+        let sourceImageUrl = this.state.imageUrl;
+        document.querySelector("#sourceImage").src = sourceImageUrl;
+
+        // Perform the REST API call.
+        $.ajax({
+            url: uriBase + "?" + $.param(params),
+
+            // Request headers.
+            beforeSend: function (xhrObj) {
+                xhrObj.setRequestHeader("Content-Type", "application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+            type: "POST",
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        })
+
+        .done( (data) => {
+            // Show formatted JSON on webpage.
+            this.setState({responseJson:JSON.stringify(data, null, 2)})
+        })
+
+        .fail( (jqXHR, textStatus, errorThrown) => {
+            // Display error message.
+            let errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+            errorString += (jqXHR.responseText === "") ? "" : jQuery.parseJSON(jqXHR.responseText).message;
+            alert(errorString);
+        });
+    };
 
     toogleDrawer() {
         this.setState({
@@ -179,26 +187,32 @@ class Main extends Component {
                     <MenuItem>Home</MenuItem>
                     <MenuItem>New Model Spec</MenuItem>
                 </Drawer>
+                <h1>Analyze image:</h1>
+                Enter the URL to an image of a natural or artificial landmark, then click the <strong>Analyze image</strong> button.
+                <br/><br/>
+                Image to analyze: 
+                <input 
+                    name = "inputImage"
+                    id = "inputImage"
+                    value = {this.state.imageUrl}
+                    style={styles.sampleInput}
+                />
+                <Button onClick={this.processImage.bind(this)}>
+                    Analyze image
+                </Button>
                 <Grid style={styles.table}>
-                    {/*<Row>
-                        <Col style={styles.columns}>
-                            <ReactPlayer width="100%" height="100%" style={styles.players} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
-                        </Col>
-                        <Col style={styles.columns}>
-                            <textarea style={styles.textboxs}>
-                            </textarea>
-                        </Col>
-                    </Row> */}
                     <Row>
-                        {/*<Col style={styles.columns}>
-                            http://ip位址/cgi-bin/viewer/video.jpg?quality=5&streamid=0 -> 拿到這時刻的截圖
-                           <img width="100%" height="100%" src="http://172.19.1.24/cgi-bin/viewer/video.jpg?quality=5&streamid=0"></img> 
-                        </Col>*/}
                         <Col style={styles.columns}>
-                           <p>{this.state.pictures}</p>
+                            Source image:
+                            <img style={styles.wrapper} id="sourceImage" />
                         </Col>
                         <Col style={styles.columns}>
-                            <textarea style={styles.textboxs}>
+                            Response:
+                            <textarea 
+                                id="responseTextArea" 
+                                style={styles.wrapperJsonOutput}
+                                value = {this.state.responseJson}
+                            >
                             </textarea>
                         </Col>
                     </Row>
