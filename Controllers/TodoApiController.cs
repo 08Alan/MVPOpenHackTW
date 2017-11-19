@@ -4,22 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mvphack.service.analyze;
 
 namespace boilerplate_dotnetcore_mvc_react.ApiControllers
 {
     [Route("api/[controller]")]
     public class TodoApiController : Controller
     {
+        AzureAnalyze service = new AzureAnalyze();
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            // service.get();
+            service.get();
             return new string[] { "value1", "value2" };
+            // return result;
         }
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
+            service.get();
+            // return result;
             return "value";
         }
         // POST api/values
