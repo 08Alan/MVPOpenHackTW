@@ -119,7 +119,7 @@ class Main extends Component {
     }
 
     processImage() {
-        let subscriptionKey = "102740de8d4647d39c488e424657b9c2";
+        let subscriptionKey = "";
         let uriBase = "https://eastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
         // Request parameters.
